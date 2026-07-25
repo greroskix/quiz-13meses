@@ -19,14 +19,3 @@ O jogo foi construído puramente com tecnologias web nativas, focando em perform
 *   **HTML5:** Estruturação semântica das telas e do fluxo do quiz.
 *   **CSS3:** Estilização customizada, design responsivo (adaptado para mobile e desktop) e animações suaves.
 *   **JavaScript (ES6+):** Lógica do jogo, manipulação do DOM, controle dos estados das perguntas e validação das respostas.
-
----
-
-## 📂 Estrutura do Repositório
-
-```text
-├── index.html          # Estrutura principal do jogo
-├── css/
-│   └── style.css       # Estilizações, cores e responsividade
-└── js/
-    └── script.js       # Lógica do quiz, perguntas e validações
