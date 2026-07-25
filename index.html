@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13 Meses de Amor - The Game</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
+    <link rel="manifest" href="assets/img/site.webmanifest">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+
+    <audio id="bg-music" loop><source src="assets/audio/sountrack_menu.mp3" type="audio/mpeg"></audio>
+    <audio id="enigma-music" loop><source src="assets/audio/enigma_sountrack.mp3" type="audio/mpeg"></audio>
+    <audio id="coin-sound"><source src="assets/audio/moeda.mp3" type="audio/mpeg"></audio>
+    <audio id="success-sound"><source src="assets/audio/som_enigma-acertado.mp3" type="audio/mpeg"></audio>
+    <audio id="play-sound"><source src="assets/audio/efeito_play.mp3" type="audio/mpeg"></audio>
+    <audio id="theme1-music"><source src="assets/audio/musica_theme1.mp3" type="audio/mpeg"></audio>
+    <audio id="theme2-music"><source src="assets/audio/musica_theme2.mp3" type="audio/mpeg"></audio>
+    <audio id="theme3-music"><source src="assets/audio/musica_theme3.mp3" type="audio/mpeg"></audio>
+    <audio id="contagem-sound"><source src="assets/audio/contagem.mp3" type="audio/mpeg"></audio>
+    <audio id="select-sound"><source src="assets/audio/select_question.mp3" type="audio/mpeg"></audio>
+    <audio id="sound-derrota"><source src="assets/audio/sound_derrota.mp3" type="audio/mpeg"></audio>
+    <audio id="sound-victory"><source src="assets/audio/sound_victory.mp3" type="audio/mpeg"></audio>
+    <audio id="musica-final"><source src="assets/audio/musica_final.mp3" type="audio/mpeg"></audio>
+
+    <div class="menu-container">
+
+        <div id="start-screen">
+            <h1 class="arcade-title" id="arcade-title-text">
+                <span class="title-word">SISTEMA</span>
+                <span class="title-word">DE</span>
+                <span class="title-word">AVALIAÇÃO</span>
+                <br>
+                <span class="title-word">CONJUGAL</span>
+                <span class="title-word">v13.0</span>
+            </h1>
+            <p class="insert-coin">INSERT COIN TO PLAY</p>
+            <button id="start-btn" class="start-btn">PRESS START</button>
+        </div>
+
+        <div id="enigma-screen" class="hidden">
+            <h2 class="enigma-title">Para passar para o jogo, resolva esse enigma!</h2>
+            <div class="riddle-box">
+                <p>Há pessoas que escolheriam um beijo.</p>
+                <p>Outras escolheriam um abraço.</p>
+                <p>Eu escolhi algo muito mais emocionante...</p>
+                <p class="question">O que foi?</p>
+            </div>
+            <div class="input-group">
+                <input type="text" id="enigma-answer" placeholder="SUA RESPOSTA" autocomplete="off">
+                <button id="submit-enigma" class="btn-primary" style="margin-top: 10px;">ENVIAR</button>
+            </div>
+            <p id="enigma-error" class="hidden error-text">RESPOSTA INCORRETA</p>
+            <p id="enigma-hint" class="hidden hint-text"></p>
+        </div>
+
+        <div id="victory-screen" class="hidden">
+            <div class="victory-modal arcade-modal" id="victory-modal">
+                <h2 class="victory-title-text">ENIGMA RESOLVIDO!</h2>
+                <div class="final-enigma-scene">
+                    <img src="assets/img/lais_parada.png" id="lais-walking" class="lais-character hidden">
+                    <img src="assets/img/lais_pulando.png" id="lais-jumping" class="lais-character hidden">
+                    <div id="castle-fireworks" class="fireworks-layer"></div>
+                </div>
+                <div class="victory-modal-footer">
+                    <button id="go-to-game-btn" class="hidden btn-primary fade-btn">▶ IR PARA O JOGO</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="animation-screen" class="hidden">
+            <div class="image-container">
+                <img src="assets/img/capa_jogo.png" alt="Nossa Foto" id="cover-image" class="cover-image">
+            </div>
+            <h1 id="game-title" class="hidden title-text">
+                <span class="title-word">13</span>
+                <span class="title-word">Perguntas</span>
+                <span class="title-word">para</span>
+                <span class="title-word">provar</span>
+                <span class="title-word">que</span>
+                <span class="title-word">você</span>
+                <span class="title-word">me</span>
+                <span class="title-word">ama</span>
+            </h1>
+            <div id="main-menu-buttons" class="hidden menu-buttons-container">
+                <button id="play-btn" class="btn-primary">PLAY</button>
+                <button id="about-btn" class="btn-secondary">SOBRE O JOGO</button>
+                <button id="config-btn" class="btn-secondary">CONFIGURAÇÕES</button>
+            </div>
+
+            <div id="about-modal" class="hidden arcade-modal">
+                <button class="close-btn" id="close-about">X</button>
+                <h2>SOBRE O JOGO</h2>
+                <p>Este jogo contém 13 perguntas com 4 alternativas cada.</p>
+                <p>Elas são sobre mim e sobre o nosso relacionamento no geral.</p>
+                <p>No final, o jogo mostrará quantas você acertou e errou.</p>
+                <p class="highlight">Atenção: Se você não acertar 13/13, você não ganha o prêmio final!</p>
+            </div>
+
+            <div id="config-modal" class="hidden arcade-modal">
+                <button class="close-btn" id="close-config">X</button>
+                <h2>CONFIGURAÇÕES</h2>
+                <div class="audio-controls">
+                    <p>Volume do Jogo:</p>
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
+                    <button id="mute-btn" class="btn-secondary small-btn">MUTAR SOM</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading-screen" class="hidden">
+            <div class="load-corner tl"></div>
+            <div class="load-corner tr"></div>
+            <div class="load-corner bl"></div>
+            <div class="load-corner br"></div>
+            <div class="loading-content">
+                <h2 class="loading-text">LOADING<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span></h2>
+                <div class="loading-panel">
+                    <div class="loading-track">
+                        <div class="loading-sky"></div>
+                        <div class="loading-clouds">
+                            <div class="cloud c1"></div>
+                            <div class="cloud c2"></div>
+                            <div class="cloud c3"></div>
+                        </div>
+                        <div class="loading-floor"></div>
+                        <div class="loading-ground-strip"></div>
+                        <div class="andre-runner" id="andre-runner">
+                            <img src="assets/img/correndo1_andre.png" class="frame-1">
+                            <img src="assets/img/correndo2_andre.png" class="frame-2">
+                        </div>
+                        <div class="lais-runner" id="lais-runner">
+                            <img src="assets/img/correndo1_lais.png" class="frame-1">
+                            <img src="assets/img/correndo_lais2.png" class="frame-2">
+                        </div>
+                    </div>
+                    <div class="loading-bar-row">
+                        <div class="loading-bar-container">
+                            <div class="loading-bar" id="loading-bar"></div>
+                            <span class="bar-percent" id="bar-percent">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="countdown-screen" class="hidden">
+            <div class="countdown-number" id="countdown-number"></div>
+        </div>
+
+        <div id="quiz-screen" class="hidden">
+            <div class="quiz-scanlines"></div>
+            <div class="quiz-inner">
+                <div class="quiz-header">
+                    <div class="question-counter">
+                        PERGUNTA <span id="q-number">01</span>/<span>13</span>
+                    </div>
+                </div>
+                <div class="question-box">
+                    <p id="question-text" class="question-text"></p>
+                </div>
+                <div class="answers-grid" id="answers-grid">
+                    <button class="answer-btn" id="ans-a" data-key="a" data-label="A"></button>
+                    <button class="answer-btn" id="ans-b" data-key="b" data-label="B"></button>
+                    <button class="answer-btn" id="ans-c" data-key="c" data-label="C"></button>
+                    <button class="answer-btn" id="ans-d" data-key="d" data-label="D"></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="results-screen" class="hidden">
+            <div class="results-modal arcade-modal" id="results-modal">
+                <h2 class="results-title" id="results-title">FIM DE JOGO!</h2>
+                <div class="results-score-box">
+                    ACERTOU: <span id="score-val">0</span>/13
+                </div>
+                <p class="results-desc" id="results-desc"></p>
+                <div id="results-action-container">
+                    <button id="restart-quiz-btn" class="btn-primary results-action-btn hidden">🔄 TENTE NOVAMENTE</button>
+                    <button id="claim-prize-btn" class="btn-primary results-action-btn hidden">🎁 RESGATE SEU PRÊMIO</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="prize-screen" class="hidden">
+            <div class="prize-wrapper">
+                <div class="prize-header">
+                    <span class="prize-star">★</span>
+                    <h1 class="prize-main-title">PRÊMIO DESBLOQUEADO!</h1>
+                    <span class="prize-star">★</span>
+                </div>
+                <div class="prize-ticket-container">
+                    <img src="assets/img/andre_ticket.png" alt="Vale Presente" id="prize-ticket-img" class="prize-ticket-img">
+                </div>
+                <div class="prize-message-box arcade-modal">
+                    <p class="prize-congrats">Parabéns! Até que você me conhece né.</p>
+                    <p class="prize-body">Bom, como você conseguiu acertar <strong>TODAS AS PERGUNTAS</strong>, você acaba de ganhar um <span class="prize-highlight">VALE SHEIN</span>, no valor de <span class="prize-amount">R$ 80,00</span>! Para resgatar basta me mostrar o carrinho. 🛍️</p>
+                </div>
+                <div class="prize-love-footer">
+                    <p class="prize-love-text">EU TE AMO MEU AMOR! 13 MESES AO SEU LADO.</p>
+                    <p class="prize-love-text">13 MESES QUE EU SOU A PESSOA MAIS SORTUDA DO MUNDO!</p>
+                    <p class="prize-love-small">Te amo hoje, amanhã, e sempre minha preta! ❤️</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
