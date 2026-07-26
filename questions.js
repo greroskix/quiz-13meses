@@ -1,6 +1,3 @@
-// ============================================================
-// QUESTIONS DATA - 13 Questions for Quiz
-// ============================================================
 const QUESTIONS = [
     {
         question: "Qual é meu jogo Favorito?",
@@ -23,9 +20,9 @@ const QUESTIONS = [
         correct: 2
     },
     {
-        question: "Se eu pudesse mudar alguma coisa em mim, o que eu mudaria?",
-        answers: ["Minha voz", "Meu corpo", "Meu nariz", "Meu queixo"],
-        correct: 2
+        question: "Qual a minha cor favorita?",
+        answers: ["Laranja", "Preto", "Azul", "Vermelho"],
+        correct: 0
     },
     {
         question: "Qual é meu MAIOR talento escondido?",
@@ -33,13 +30,13 @@ const QUESTIONS = [
         correct: 1
     },
     {
-        question: "O que eu mais gostava de fazer na minha infância?",
-        answers: ["Jogar free fire com meus amigos", "Jogar bola com meus amigos", "Assistir meus desenhos na tv", "Brincar com meus amigos na escola"],
-        correct: 2
+        question: "Qual lugar do mundo eu sonho em visitar?",
+        answers: ["Londres", "Roma", "Tokyo", "New York"],
+        correct: 0
     },
     {
-        question: "Qual era meu sonho quando era criança?",
-        answers: ["Bombeiro", "Ser jogador de futebol", "Ser professor de informática", "Trabalhar com Música"],
+        question: "Qual a minha maior insegurança?",
+        answers: ["Meu nariz", "Meu corpo", "Minha voz", "Minha altura"],
         correct: 2
     },
     {
@@ -48,26 +45,25 @@ const QUESTIONS = [
         correct: 0
     },
     {
-        question: "No momento em que eu me apaixonei por você, por qual motivo foi?",
-        answers: ["Pelo seu jeito radiante e alegre de ser", "Pelo seu cabelo impecável", "Pela sua risada", "Pelo seu sorriso"],
+        question: "Quando eu me apaixonei por você?",
+        answers: ["No nosso primeiro encontro", "Enquanto conversava com você pelo wzp", "Quando eu tava rindo com você descendo do Senai", "Quando a gente tava juntos no Cat"],
         correct: 2
     },
     {
-        question: "Qual foi a primeira impressão que eu tive de você quando te conheci?",
-        answers: ["Eu te odiava, achava insuportável", "Te achei muito bonita, mas achava q você me odiava", "Te achei muito bonita, mas não ia com sua cara", "Te achei muito legal, e queria te conhecer mais"],
+        question: "Qual a minha foto favorita sua?",
+        answers: ["Você de costas na sua viagem para Angra", "A do seu aniversário segurando a Torta", "Sua foto de lado no Zoe com a blusinha preta ", "De você no seu espetáculo"],
         correct: 1
     },
     {
         question: "Qual foi a primeira vez que a gente se falou pessoalmente?",
         answers: ["Na portaria do cat", "No max feffer no piquenique", "No senai enquanto falava comigo e o hiago", "No interclasse"],
-        correct: 0
+        correct: 2
     },
     {
-        question: "Minha memória favorita da gente juntos:",
-        answers: ["Primeiro encontro juntos", "Primeira vez matando aula juntos", "Aquele dia do max feffer onde tomamos aquele açaí na garrafa", "Você na minha casa fazendo fondue comigo e minha mãe"],
-        correct: 0
+        question: "Oque eu mais gosto em você?",
+        answers: ["Seu jeito radiante e alegre de ser", "Seu sorriso contagiante", "Seu cabelo IMPECÁVEL", "Todas as opções"],
+        correct: 3
     }
 ];
 
-// Assign labels A B C D to each answer
 const LABELS = ['A', 'B', 'C', 'D'];
