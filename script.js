@@ -173,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let wrongAttempts = 0;
     let currentQuestion = 0;
     let score = 0;
+    let wrongQuestions = [];
 
     createPixelStars();
 
@@ -229,45 +230,67 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             victoryScreen.classList.remove('hidden');
             setTimeout(() => {
-                victoryModal.classList.add('slide-up');
-                setTimeout(() => {
-                    const laisW = document.getElementById('lais-walking');
-                    const laisJ = document.getElementById('lais-jumping');
-                    laisW.classList.remove('hidden');
-                    laisW.classList.add('walk-to-stairs');
-                    setTimeout(() => {
-                        laisW.classList.remove('walk-to-stairs');
-                        laisW.classList.add('climb-stairs');
-                        setTimeout(() => {
-                            laisW.classList.add('hidden');
-                            laisJ.classList.remove('hidden');
-                            laisJ.classList.add('jump-from-stairs');
-                            setTimeout(() => {
-                                laisJ.classList.remove('jump-from-stairs');
-                                laisJ.classList.add('slide-down-pole');
-                                setTimeout(() => {
-                                    laisJ.classList.add('hidden');
-                                    laisW.classList.remove('climb-stairs');
-                                    laisW.classList.remove('hidden');
-                                    laisW.classList.add('walk-to-castle');
-                                    setTimeout(() => {
-                                        triggerCastleFireworks();
-                                        goToGameBtn.classList.remove('hidden');
-                                        goToGameBtn.classList.add('show');
-                                    }, 1500);
-                                }, 1000);
-                            }, 1500);
-                        }, 1500);
-                    }, 1500);
-                }, 800);
-            }, 50);
+                victoryModal.classList.add('show');
+                startVictoryFireworks();
+            }, 100);
         }, 300);
+    }
+
+    let victoryFireworksInterval = null;
+
+    function startVictoryFireworks() {
+        const container = document.getElementById('victory-fireworks-bg');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const colors = ['#ffd700', '#ff4b72', '#00ffff', '#00ff66', '#ff69b4', '#ffffff', '#ff6347'];
+
+        function spawnBurst() {
+            const cx = Math.random() * 100;
+            const cy = Math.random() * 60 + 5;
+            const particleCount = Math.floor(Math.random() * 10) + 12;
+
+            for (let i = 0; i < particleCount; i++) {
+                const p = document.createElement('div');
+                p.className = 'fw-particle';
+                p.style.left = cx + '%';
+                p.style.top = cy + '%';
+                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                const angle = (i / particleCount) * Math.PI * 2 + (Math.random() * 0.3);
+                const dist = Math.random() * 70 + 30;
+                p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+                p.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+                container.appendChild(p);
+                setTimeout(() => p.remove(), 1200);
+            }
+        }
+
+        // Immediate burst trio
+        spawnBurst();
+        setTimeout(spawnBurst, 200);
+        setTimeout(spawnBurst, 400);
+
+        // Continuous fireworks
+        victoryFireworksInterval = setInterval(() => {
+            spawnBurst();
+            if (Math.random() > 0.4) setTimeout(spawnBurst, 150 + Math.random() * 200);
+        }, 600 + Math.random() * 400);
+    }
+
+    function stopVictoryFireworks() {
+        if (victoryFireworksInterval) {
+            clearInterval(victoryFireworksInterval);
+            victoryFireworksInterval = null;
+        }
+        const container = document.getElementById('victory-fireworks-bg');
+        if (container) container.innerHTML = '';
     }
 
     // ── Ir para o menu principal ──
     goToGameBtn.addEventListener('click', () => {
         enigmaScreen.classList.add('hidden');
         victoryScreen.classList.add('hidden');
+        stopVictoryFireworks();
         bgAudio.play().catch(() => {});
         showAnimationScreen();
     });
@@ -397,6 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quizScreen.classList.remove('hidden');
         currentQuestion = 0;
         score = 0;
+        wrongQuestions = [];
         loadQuestion();
     }
 
@@ -431,9 +455,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const q = QUESTIONS[currentQuestion];
         document.querySelectorAll('.answer-btn').forEach(b => b.style.pointerEvents = 'none');
-        btn.classList.add('selected');
 
-        if (idx === q.correct) score++;
+        if (idx === q.correct) {
+            score++;
+            btn.classList.add('correct');
+        } else {
+            btn.classList.add('wrong');
+            wrongQuestions.push({ number: currentQuestion + 1, text: q.question });
+        }
 
         setTimeout(() => {
             currentQuestion++;
@@ -442,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 showResults();
             }
-        }, 1000);
+        }, 1200);
     }
 
     // ── Tela de resultados ──
@@ -452,11 +481,15 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsScreen.classList.remove('hidden');
         scoreVal.textContent = score;
 
+        const wrongContainer = document.getElementById('wrong-questions-container');
+
         if (score === QUESTIONS.length) {
             resultsTitle.textContent = 'PARABÉNS! 🏆';
             resultsDesc.textContent  = 'INCRÍVEL! VOCÊ PROVOU QUE ME CONHECE E ME AMA DE VERDADE! TODAS AS 13 RESPOSTAS CORRETAS!';
             restartQuizBtn.classList.add('hidden');
             claimPrizeBtn.classList.remove('hidden');
+            wrongContainer.classList.add('hidden');
+            wrongContainer.innerHTML = '';
             victoryAudio.currentTime = 0;
             victoryAudio.volume = masterVolume;
             victoryAudio.play().catch(() => {});
@@ -468,6 +501,18 @@ document.addEventListener('DOMContentLoaded', () => {
             derrotaAudio.currentTime = 0;
             derrotaAudio.volume = masterVolume;
             derrotaAudio.play().catch(() => {});
+
+            // Render wrong questions
+            if (wrongQuestions.length > 0) {
+                wrongContainer.classList.remove('hidden');
+                wrongContainer.innerHTML = '<p class="wrong-q-title">PERGUNTAS QUE VOCÊ ERROU:</p>' +
+                    wrongQuestions.map(wq =>
+                        `<p class="wrong-q-item">❌ Pergunta ${String(wq.number).padStart(2, '0')}: ${wq.text}</p>`
+                    ).join('');
+            } else {
+                wrongContainer.classList.add('hidden');
+                wrongContainer.innerHTML = '';
+            }
         }
     }
 

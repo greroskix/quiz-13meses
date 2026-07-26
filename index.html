@@ -61,16 +61,20 @@
         </div>
 
         <div id="victory-screen" class="hidden">
-            <div class="victory-modal arcade-modal" id="victory-modal">
+            <div id="victory-fireworks-bg"></div>
+            <div class="victory-celebration" id="victory-modal">
+                <div class="victory-stars-row">
+                    <span class="v-star">★</span>
+                    <span class="v-star">★</span>
+                    <span class="v-star">★</span>
+                </div>
                 <h2 class="victory-title-text">ENIGMA RESOLVIDO!</h2>
-                <div class="final-enigma-scene">
-                    <img src="assets/img/lais_parada.png" id="lais-walking" class="lais-character hidden">
-                    <img src="assets/img/lais_pulando.png" id="lais-jumping" class="lais-character hidden">
-                    <div id="castle-fireworks" class="fireworks-layer"></div>
+                <div class="victory-character-container">
+                    <div class="victory-glow-ring"></div>
+                    <img src="assets/img/lais_pulando.png" class="victory-lais-img" alt="Laís comemorando">
                 </div>
-                <div class="victory-modal-footer">
-                    <button id="go-to-game-btn" class="hidden btn-primary fade-btn">▶ IR PARA O JOGO</button>
-                </div>
+                <p class="victory-subtitle">PARABÉNS! VOCÊ RESOLVEU! 🎉</p>
+                <button id="go-to-game-btn" class="btn-primary victory-play-btn">▶ IR PARA O JOGO</button>
             </div>
         </div>
 
@@ -124,13 +128,20 @@
                 <div class="loading-panel">
                     <div class="loading-track">
                         <div class="loading-sky"></div>
+                        <div class="beach-sun"></div>
                         <div class="loading-clouds">
                             <div class="cloud c1"></div>
                             <div class="cloud c2"></div>
                             <div class="cloud c3"></div>
                         </div>
+                        <div class="beach-sea">
+                            <div class="sea-wave w1"></div>
+                            <div class="sea-wave w2"></div>
+                        </div>
                         <div class="loading-floor"></div>
                         <div class="loading-ground-strip"></div>
+                        <div class="beach-palm palm-left"></div>
+                        <div class="beach-palm palm-right"></div>
                         <div class="andre-runner" id="andre-runner">
                             <img src="assets/img/correndo1_andre.png" class="frame-1">
                             <img src="assets/img/correndo2_andre.png" class="frame-2">
@@ -181,6 +192,7 @@
                     ACERTOU: <span id="score-val">0</span>/13
                 </div>
                 <p class="results-desc" id="results-desc"></p>
+                <div id="wrong-questions-container" class="hidden"></div>
                 <div id="results-action-container">
                     <button id="restart-quiz-btn" class="btn-primary results-action-btn hidden">🔄 TENTE NOVAMENTE</button>
                     <button id="claim-prize-btn" class="btn-primary results-action-btn hidden">🎁 RESGATE SEU PRÊMIO</button>
