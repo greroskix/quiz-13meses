@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 enigmaHint.textContent = 'DICA 1: Envolve um travesseiro, uma cama e uma péssima escolha';
                 enigmaHint.classList.remove('hidden');
             } else if (wrongAttempts === 5) {
-                enigmaHint.textContent = 'DICA 2: Esse momento aconteceu no Max Fevver!';
+                enigmaHint.textContent = 'DICA 2: Esse momento aconteceu no Max Feffer!';
             } else if (wrongAttempts >= 6) {
                 const ans = 'DORMIR', reveal = wrongAttempts - 5;
                 let s = `A palavra tem ${ans.length} letras: `;
